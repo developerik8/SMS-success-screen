@@ -48,21 +48,26 @@
             color: #dc3545;
             font-weight: bold;
         }
-        .button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 12px 30px;
-            border: none;
-            border-radius: 25px;
-            font-size: 16px;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
+        .info {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
             margin-top: 20px;
+            border-left: 4px solid #667eea;
         }
-        .button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
@@ -71,7 +76,10 @@
         <div class="logo">🎓 EduNest</div>
         <div id="content">
             <div class="title">Email Confirmation</div>
-            <div class="message">Please wait while we confirm your email...</div>
+            <div class="message">
+                <span class="loading"></span>
+                Processing your email confirmation...
+            </div>
         </div>
     </div>
 
@@ -90,28 +98,32 @@
             contentDiv.innerHTML = `
                 <div class="title">Confirmation Failed</div>
                 <div class="message error">${errorDescription || 'An error occurred during email confirmation.'}</div>
-                <a href="https://your-app-domain.com" class="button">Return to App</a>
+                <div class="info">
+                    <strong>What to do next:</strong><br>
+                    Please try signing up again or contact support if the problem persists.
+                </div>
             `;
         } else if (token && type === 'signup') {
             // Show success message
             contentDiv.innerHTML = `
                 <div class="title">Email Confirmed!</div>
                 <div class="message success">Your email has been successfully confirmed. You can now log in to your EduNest account.</div>
-                <a href="https://your-app-domain.com" class="button">Open EduNest App</a>
+                <div class="info">
+                    <strong>What to do next:</strong><br>
+                    Open your EduNest app and log in with your email and password.
+                </div>
             `;
         } else {
             // Show generic message
             contentDiv.innerHTML = `
                 <div class="title">Email Confirmation</div>
                 <div class="message">Your email confirmation link is being processed...</div>
-                <a href="https://your-app-domain.com" class="button">Return to App</a>
+                <div class="info">
+                    <strong>What to do next:</strong><br>
+                    If you're still having issues, please try signing up again.
+                </div>
             `;
         }
-
-        // Auto-redirect after 5 seconds
-        setTimeout(() => {
-            window.location.href = 'https://your-app-domain.com';
-        }, 5000);
     </script>
 </body>
 </html> 
